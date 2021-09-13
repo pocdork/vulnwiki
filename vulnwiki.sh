@@ -32,7 +32,7 @@ auth=$(cat .token)
 	printf "${RED}Getting vulnerable Wiki pages...${NC}\n\n" 
 	while read name
 	do
-		wiki=$(curl -s -X 'GET' -b 'user_session='$session'' "https://github.com/$org/$name/wiki/_new" | grep "Create New Page" | awk '{print $5}')
+		wiki=$(curl -s -X 'GET' -b 'user_session='$session'' "https://github.com/$org/$name/wiki/_new" | grep "$name"|grep "Create New Page"|awk '{print $5}'|head -1)
 		
 		if [[ "$wiki" =~ ^("$org/$name")$ ]]; then
 
